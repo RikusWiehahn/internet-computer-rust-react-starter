@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
@@ -76,12 +77,13 @@ module.exports = {
   // modules and CSS as described in the "Adding a stylesheet"
   // tutorial, uncomment the following lines:
   module: {
-   rules: [
-     { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
-     { test: /\.css$/, use: ['style-loader','css-loader'] }
-   ]
+    rules: [
+      { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
+      { test: /\.css$/, use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"] },
+    ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, asset_entry),
       cache: false,
