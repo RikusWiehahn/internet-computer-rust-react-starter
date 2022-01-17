@@ -12,3 +12,6 @@ crate-type = ["cdylib"]
 [dependencies]
 ic-cdk = "0.3"
 ic-cdk-macros = "0.3"
+serde = "1.0"
+uuid = { version = "0.8.2", features = ["serde", "v4"] }
+getrandom = { version = "0.2", features = ["js"] }
