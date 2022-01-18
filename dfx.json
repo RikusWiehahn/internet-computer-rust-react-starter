@@ -1,20 +1,20 @@
 {
   "canisters": {
-    "rust_profile": {
-      "candid": "src/rust_profile/rust_profile.did",
-      "package": "rust_profile",
+    "rust_starter": {
+      "candid": "src/rust_starter/rust_starter.did",
+      "package": "rust_starter",
       "type": "rust"
     },
-    "rust_profile_assets": {
+    "rust_starter_assets": {
       "dependencies": [
-        "rust_profile"
+        "rust_starter"
       ],
       "frontend": {
-        "entrypoint": "src/rust_profile_assets/src/index.html"
+        "entrypoint": "src/rust_starter_assets/src/index.html"
       },
       "source": [
-        "src/rust_profile_assets/assets",
-        "dist/rust_profile_assets/"
+        "src/rust_starter_assets/assets",
+        "dist/rust_starter_assets/"
       ],
       "type": "assets"
     }

@@ -39,7 +39,7 @@ const canisterEnvVariables = initCanisterEnv();
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-const frontendDirectory = "rust_profile_assets";
+const frontendDirectory = "rust_starter_assets";
 
 const asset_entry = path.join("src", frontendDirectory, "src", "index.html");
 

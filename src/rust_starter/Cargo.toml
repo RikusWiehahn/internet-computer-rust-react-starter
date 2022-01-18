@@ -1,5 +1,5 @@
 [package]
-name = "rust_profile"
+name = "rust_starter"
 version = "0.1.0"
 edition = "2018"
 

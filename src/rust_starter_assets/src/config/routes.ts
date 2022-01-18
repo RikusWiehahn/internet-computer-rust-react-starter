@@ -1,0 +1,15 @@
+export enum routes {
+  HOME = "/",
+  MY_USER_ACCOUNT = "/my-user-account",
+  MY_WALLET = "/my-wallet",
+  MY_TRADER_PROFILE = "/my-trader-profile",
+  MY_LISTINGS_LIST = "/my-listings-list",
+  MY_LISTING_DETAILS = "/my-listing-details",
+  NOTIFICATIONS = "/notifications",
+  CHAT_CHANNEL_LIST = "/chat-channel-list",
+  CHAT_CHANNEL = "/chat-channel",
+  LISTINGS_BROWSE = "/listings-browse",
+  LISTING_DETAILS = "/listing-details",
+  TRADER_PROFILES_BROWSE = "/trader-profiles-browse",
+  TRADER_PROFILE_DETAILS = "/trader-profile-details",
+}

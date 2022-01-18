@@ -1,16 +1,16 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
 
 // Imports and re-exports candid interface
-import { idlFactory } from './rust_profile.did.js';
-export { idlFactory } from './rust_profile.did.js';
+import { idlFactory } from './rust_starter.did.js';
+export { idlFactory } from './rust_starter.did.js';
 // CANISTER_ID is replaced by webpack based on node environment
-export const canisterId = process.env.RUST_PROFILE_CANISTER_ID;
+export const canisterId = process.env.RUST_STARTER_CANISTER_ID;
 
 /**
  * 
  * @param {string | import("@dfinity/principal").Principal} canisterId Canister ID of Agent
  * @param {{agentOptions?: import("@dfinity/agent").HttpAgentOptions; actorOptions?: import("@dfinity/agent").ActorConfig}} [options]
- * @return {import("@dfinity/agent").ActorSubclass<import("./rust_profile.did.js")._SERVICE>}
+ * @return {import("@dfinity/agent").ActorSubclass<import("./rust_starter.did.js")._SERVICE>}
  */
  export const createActor = (canisterId, options) => {
   const agent = new HttpAgent({ ...options?.agentOptions });
@@ -32,7 +32,7 @@ export const canisterId = process.env.RUST_PROFILE_CANISTER_ID;
 };
   
 /**
- * A ready-to-use agent for the rust_profile canister
- * @type {import("@dfinity/agent").ActorSubclass<import("./rust_profile.did.js")._SERVICE>}
+ * A ready-to-use agent for the rust_starter canister
+ * @type {import("@dfinity/agent").ActorSubclass<import("./rust_starter.did.js")._SERVICE>}
  */
- export const rust_profile = createActor(canisterId);
+ export const rust_starter = createActor(canisterId);

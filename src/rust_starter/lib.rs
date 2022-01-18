@@ -3,35 +3,8 @@ use ic_cdk::storage;
 use ic_cdk_macros::*;
 use std::vec::Vec;
 
-//
-//  ##### #   # #####  ######  ####
-//    #    # #  #    # #      #
-//    #     #   #    # #####   ####
-//    #     #   #####  #           #
-//    #     #   #      #      #    #
-//    #     #   #      ######  ####
-
-#[derive(Clone, Debug, Default, CandidType, Deserialize)]
-struct Profile {
-	pub id: String,
-	pub name: String,
-	pub description: String,
-	pub keywords: Vec<String>,
-}
-
-#[derive(Clone, Debug, Default, CandidType, Deserialize)]
-struct UpdateProfile {
-	pub name: String,
-	pub description: String,
-	pub keywords: Vec<String>,
-}
-
-#[derive(Clone, Debug, Default, CandidType, Deserialize)]
-struct Note {
-	pub id: String,
-	pub title: String,
-	pub contents: String,
-}
+mod types;
+use types::*;
 
 //
 //   ####  #####   ##   ##### ######
@@ -53,10 +26,10 @@ type NoteList = Vec<Note>;
 //  #       ####  #    #  ####    #   #  ####  #    #  ####
 
 #[query(name = "getSelf")]
-fn get_self() -> Option<Profile> {
+async fn get_self() -> Option<Profile> {
 	let id = ic_cdk::caller().to_text();
 	let profile_list = storage::get::<ProfileList>();
-	if is_anonymous(&id) {
+	if is_anonymous(&id).await {
 		return None;
 	}
 
@@ -69,9 +42,9 @@ fn get_self() -> Option<Profile> {
 }
 
 #[query(name = "findUnique")]
-fn find_unique(id: String) -> Option<Profile> {
+async fn find_unique(id: String) -> Option<Profile> {
 	let profile_list = storage::get::<ProfileList>();
-	if is_anonymous(&id) {
+	if is_anonymous(&id).await {
 		return None;
 	}
 
@@ -84,11 +57,11 @@ fn find_unique(id: String) -> Option<Profile> {
 }
 
 #[update]
-fn create(profile: UpdateProfile) -> Option<Profile> {
+async fn create(profile: UpdateProfile) -> Option<Profile> {
 	let id = ic_cdk::caller().to_text();
 	let profile_list = storage::get_mut::<ProfileList>();
 	let mut exists = false;
-	if is_anonymous(&id) {
+	if is_anonymous(&id).await {
 		return None;
 	}
 
@@ -112,10 +85,10 @@ fn create(profile: UpdateProfile) -> Option<Profile> {
 }
 
 #[update]
-fn update(profile: UpdateProfile) -> Option<Profile> {
+async fn update(profile: UpdateProfile) -> Option<Profile> {
 	let id = ic_cdk::caller().to_text();
 	let profile_list = storage::get_mut::<ProfileList>();
-	if is_anonymous(&id) {
+	if is_anonymous(&id).await {
 		return None;
 	}
 
@@ -134,7 +107,7 @@ fn update(profile: UpdateProfile) -> Option<Profile> {
 }
 
 #[query]
-fn search(text: String) -> Option<Profile> {
+async fn search(text: String) -> Option<Profile> {
 	let text = text.to_lowercase();
 	let profile_list = storage::get_mut::<ProfileList>();
 
@@ -155,7 +128,7 @@ fn search(text: String) -> Option<Profile> {
 
 #[cfg(feature = "v4")]
 #[update(name = "createNote")]
-fn create_note(note: Note) -> Option<Note> {
+async fn create_note(note: Note) -> Option<Note> {
 	let note_list = storage::get_mut::<NoteList>();
 	let new_note_id: String = Uuid::new_v4().to_string();
 
@@ -169,13 +142,13 @@ fn create_note(note: Note) -> Option<Note> {
 }
 
 #[query(name = "getAllNotes")]
-fn get_all_notes() -> Vec<Note> {
+async fn get_all_notes() -> Vec<Note> {
 	let note_list = storage::get::<NoteList>();
 	return note_list.clone();
 }
 
 #[update(name = "updateNote")]
-fn update_note(note: Note) -> Option<Note> {
+async fn update_note(note: Note) -> Option<Note> {
 	let note_list = storage::get_mut::<NoteList>();
 
 	for i in 0..note_list.len() {
@@ -188,7 +161,7 @@ fn update_note(note: Note) -> Option<Note> {
 }
 
 #[update(name = "deleteNote")]
-fn delete_note(id: String) -> bool {
+async fn delete_note(id: String) -> bool {
 	let note_list = storage::get_mut::<NoteList>();
 
 	for i in 0..note_list.len() {
@@ -208,7 +181,7 @@ fn delete_note(id: String) -> bool {
 //  #    #   #   # #      #    #
 //   ####    #   # ######  ####
 
-fn is_anonymous(id: &str) -> bool {
+async fn is_anonymous(id: &str) -> bool {
 	if id == "2vxsx-fae" {
 		return true;
 	}
